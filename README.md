@@ -7,10 +7,10 @@ It's important, because blender is running in containter and fetching *.blend fi
 
 ### Your Blender's project file need to have specific settings
 * render with CPU (like Cycles)
-* output file settings to image (i.e. PNG)
+* output file settings to image (i.e. PNG) or in case of animation (i.e. MKV)
 
 
-[Inspiration|(https://github.com/OpenShiftDemos/blender-remote)] based on Linux RedHat container base image and similar idea with rendering process contenerization.
+[Inspiration](https://github.com/OpenShiftDemos/blender-remote) based on Linux RedHat container base image and similar idea with rendering process contenerization.
 
 
 ## Requirements for host OS environement
@@ -36,6 +36,7 @@ docker run -p 9000:9000 -p 9001:9001   quay.io/minio/minio server /data --consol
 
 #### Simple HTTP web server with Python in second terminal (this is catalog with *.blend files for rendering)
 ```bash
+cd example-blender-2.9-file/
 python3 -m http.server --directory .
 ```
 
@@ -47,6 +48,7 @@ docker build . -t blender-container-rendering
 ```
 
 ### Run container with rendering (executing in frame buffer X server inside Docker container)
+```bash
 MY_LOCAL_NET_INTERFACE=wlo1
 MY_LOCAL_IP=$(ip -o -4 addr list $MY_LOCAL_NET_INTERFACE | awk '{print $4}' | cut -d/ -f1)
 
@@ -233,10 +235,9 @@ Files are sent into bucket named: 075fd0a3-7331-4f63-97ca-faccf3057b4c
 
 
 ## TODO list
-
-[x] rendering in docker container with Ubuntu for multiple frames on CPUs
-[ ] rendering on GPUs
-[ ] rendering in kubernetes orchestrator
-[ ] add monitoring/observability for rendering proces for long/huge arts Blender's files
-[ ] share the knowledge/experiences with community (maybe YT movie about it)
+- [x] rendering in docker container with Ubuntu for multiple frames on CPUs
+- [ ] rendering on GPUs
+- [ ] rendering in kubernetes orchestrator
+- [ ] add monitoring/observability for rendering proces for long/huge arts Blender's files
+- [ ] share the knowledge/experiences with community (maybe YT movie about it)
 
